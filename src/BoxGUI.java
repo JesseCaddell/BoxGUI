@@ -1,26 +1,31 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class BoxGUI extends JFrame {
-    private JTextField lengthField, widthField, heightField;
-    private JLabel lengthLabel, widthLabel, heightLabel;
-    private JButton calculateVolumeButton, calculateSurfaceAreaButton, displayDetailsButton;
+    final private JTextField lengthField, widthField, heightField;
+    final private JLabel lengthLabel, widthLabel, heightLabel;
+    final private JButton calculateVolumeButton, calculateSurfaceAreaButton, displayDetailsButton;
 
     public BoxGUI() {
         //JFrame set up
         setTitle("Box Calculator");
-        setSize(400, 200);
+        setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(4,2));
+        setLayout(new GridLayout(5,4));
 
         //Create JLabels
         lengthLabel = new JLabel("Length: ");
         widthLabel = new JLabel("Width: ");
         heightLabel = new JLabel("Height: ");
+        //blankLabel = new JLabel("");
 
         //Create the JtextFields
         lengthField = new JTextField();
         widthField = new JTextField();
         heightField = new JTextField();
+
 
         // Create buttons
         calculateVolumeButton = new JButton("Calculate Volume");
@@ -37,6 +42,42 @@ public class BoxGUI extends JFrame {
         add(calculateVolumeButton);
         add(calculateSurfaceAreaButton);
         add(displayDetailsButton);
+
+        //action listeners
+        calculateVolumeButton.addActionListener(e -> {
+            try {
+                double length = Double.parseDouble(lengthField.getText());
+                double width = Double.parseDouble(widthField.getText());
+                double height = Double.parseDouble(heightField.getText());
+                double volume = length * width * height;
+                JOptionPane.showMessageDialog(BoxGUI.this, "Volume: " + volume, "Box Volume", JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(BoxGUI.this, "Please enter valid double.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        calculateSurfaceAreaButton.addActionListener(e -> {
+            try {
+                double length = Double.parseDouble(lengthField.getText());
+                double width = Double.parseDouble((widthField.getText()));
+                double height = Double.parseDouble(heightField.getText());
+                double surfaceArea = 2 * (length * width + length * height + width * height);
+                JOptionPane.showMessageDialog(BoxGUI.this, "Surface Area: " + surfaceArea, "Box Surface Area", JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(BoxGUI.this, "Please enter valid doubles", "error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        displayDetailsButton.addActionListener(e -> {
+            try {
+                double length = Double.parseDouble(lengthField.getText());
+                double width = Double.parseDouble(widthField.getText());
+                double height = Double.parseDouble(heightField.getText());
+                String details = "Length: " + length + "\nWidth: " + width + "\nHeight: " + height;
+                JOptionPane.showMessageDialog(BoxGUI.this, details, "Box Details", JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(BoxGUI.this, "Please enter valid doubles.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
     }
 
 }
